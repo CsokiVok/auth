@@ -12,3 +12,17 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+
+model User{
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  introduction String @default("")
+  tokens Token[]
+}
+
+model Token{
+  token String @id
+  user User @relation(fields: [userId],references: [id],onDelete: Cascade)
+  userId Int
+}
